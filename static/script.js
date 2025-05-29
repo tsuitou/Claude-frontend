@@ -531,7 +531,7 @@ createApp({
     // メッセージの編集モードを開始
 		const startEditMessage = (index, message) => {
 			// ユーザーメッセージ「または」モデルメッセージの編集を許可
-			if ((message.role !== 'user' && message.role !== 'model') || isGenerating.value) return;
+			if ((message.role !== 'user' && message.role !== 'assistant') || isGenerating.value) return;
 			
 			// 編集中のメッセージを設定
 			editingMessageId.value = index;
@@ -575,7 +575,7 @@ createApp({
 				
 				resendMessage(index);
 				
-			} else if (messageRole === 'model') {
+			} else if (messageRole === 'assistant') {
 				socket.emit('edit_model_message', {
 					token: token.value,
 					chat_id: currentChatId.value,
@@ -620,7 +620,7 @@ createApp({
       // index + 1以降の最初のモデルメッセージ以降を削除
       let modelIndex = -1;
       for (let i = index + 1; i < currentChat.value.messages.length; i++) {
-        if (currentChat.value.messages[i].role === 'model') {
+        if (currentChat.value.messages[i].role === 'assistant') {
           modelIndex = i;
           break;
         }
@@ -632,7 +632,7 @@ createApp({
       
       // モデル応答用の仮のエントリを追加
       currentChat.value.messages.push({
-        role: 'model',
+        role: 'assistant',
         content: '',
         timestamp: Date.now() / 1000
       });
@@ -1260,7 +1260,7 @@ createApp({
 				
 				// コンテンツの処理
 				let content = '';
-				if (message.role === 'model') {
+				if (message.role === 'assistant') {
 					// モデルのレスポンスはマークダウンをHTMLに変換
 					content = md.render(message.content);
 				} else {
@@ -1735,9 +1735,9 @@ createApp({
       const lastMessage = messages[messages.length - 1];
       
       // 最後のメッセージがモデルのものでない場合、新しいモデルメッセージを追加
-      if (lastMessage.role !== 'model') {
+      if (lastMessage.role !== 'assistant') {
         messages.push({
-          role: 'model',
+          role: 'assistant',
           content: data.chunk,
           timestamp: Date.now() / 1000
         });
@@ -1772,7 +1772,7 @@ createApp({
       // エラー時に空のモデルメッセージを削除
       if (currentChat.value && currentChat.value.messages) {
         const messages = currentChat.value.messages;
-        if (messages.length > 0 && messages[messages.length - 1].role === 'model' && !messages[messages.length - 1].content.trim()) {
+        if (messages.length > 0 && messages[messages.length - 1].role === 'assistant' && !messages[messages.length - 1].content.trim()) {
           messages.pop();
         }
       }
