@@ -673,7 +673,7 @@ input:checked + .toggle-slider:before {
   white-space: pre-wrap;
 }
 
-.message.model .message-content {
+.message.assistant .message-content {
   background-color: var(--bot-message-bg);
 }
 

@@ -211,7 +211,7 @@
                     <i :class="message.role === 'user' ? 'fas fa-user' : 'fas fa-robot'"></i>
                   </div>
                   <div class="message-info">
-                    <div class="message-role">{{ message.role === 'user' ? 'User' : 'Model' }}</div>
+                    <div class="message-role">{{ message.role === 'user' ? 'User' : 'Assistant' }}</div>
                   </div>
                   <div class="message-actions" v-if="editingMessageId !== index">
 										</button>
@@ -231,7 +231,7 @@
                       <i class="fas fa-sync-alt"></i>
                     </button>
                     <button 
-                      v-if="message.role === 'model'" 
+                      v-if="message.role === 'assistant'" 
                       class="message-action-btn"
                       @click="resendMessage(index - 1)"
                       title="応答を再生成"
