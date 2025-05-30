@@ -1,4 +1,4 @@
 # Claude-frontend
 
 
-Prefill: 送信プロンプトでPrefillが記述可能
+Prefill: 送信プロンプトにこの形式で記述することでPrefillが可能
